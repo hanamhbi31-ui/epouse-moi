@@ -14,8 +14,8 @@
       --text:#f9fafb;
       --muted:rgba(249,250,251,.75);
 
-      --orange:#f97316;
-      --blue:#60a5fa;
+      --accent1:#f97316; /* orange */
+      --accent2:#60a5fa; /* bleu */
       --yes1:#22c55e;
       --yes2:#16a34a;
       --no1:#fb7185;
@@ -40,7 +40,7 @@
     }
 
     .card{
-      width:min(600px, 92vw);
+      width:min(620px, 92vw);
       background:var(--card);
       border:1px solid var(--stroke);
       border-radius:24px;
@@ -48,14 +48,25 @@
       box-shadow: 0 22px 70px rgba(0,0,0,.45);
       backdrop-filter: blur(10px);
       text-align:center;
+      position:relative;
     }
 
-    .tag{
+    .name{
+      display:inline-block;
+      padding:8px 14px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      font-weight:900;
+      letter-spacing:.06em;
       font-size:12px;
-      opacity:.7;
       margin-bottom:12px;
-      letter-spacing:.04em;
-      font-weight:700;
+    }
+    .name span{
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
     }
 
     h1{
@@ -75,6 +86,7 @@
       min-height:22px;
       font-weight:800;
       letter-spacing:.01em;
+      color:rgba(249,250,251,.92);
     }
 
     .buttons{
@@ -92,7 +104,8 @@
       border-radius:999px;
       font-weight:800;
       cursor:pointer;
-      transition: transform .18s ease, opacity .18s ease;
+      transition: transform .18s ease, opacity .18s ease, filter .18s ease;
+      user-select:none;
     }
 
     #yesBtn{
@@ -100,6 +113,7 @@
       color:white;
       transform:scale(1);
     }
+    #yesBtn:hover{filter:brightness(1.05)}
 
     #noBtn{
       background: linear-gradient(135deg, var(--no1), var(--no2));
@@ -117,12 +131,13 @@
       width:min(360px, 86vw);
       border-radius:16px;
       box-shadow:0 18px 40px rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.10);
     }
 
     .final-text{
       margin-top:12px;
-      font-weight:800;
-      opacity:.9;
+      font-weight:900;
+      opacity:.95;
     }
 
     @keyframes pop{
@@ -136,7 +151,6 @@
       pointer-events:none;
       overflow:hidden;
     }
-
     .piece{
       position:absolute;
       width:10px;
@@ -145,7 +159,6 @@
       animation: fall linear forwards;
       border-radius:3px;
     }
-
     @keyframes fall{
       to{transform:translateY(110vh) rotate(720deg)}
     }
@@ -153,102 +166,104 @@
 </head>
 
 <body>
+  <div class="confetti" id="confetti"></div>
 
-<div class="confetti" id="confetti"></div>
+  <div class="card">
+    <div class="name">Pour <span id="hisName">Nassim</span></div>
 
-<div class="card">
+    <h1>
+      <span id="hisName2">Nassim</span>, est-ce que tu veux finir ta vie auprès de moi, pour toujours ?
+    </h1>
 
-  <div class="tag">Obito × Rin</div>
+    <p>Clique, et sois honnête.</p>
 
-  <h1>
-    Nassim…<br>
-    Est-ce que tu veux finir ta vie auprès de moi,<br>
-    pour toujours ?
-  </h1>
+    <div id="plea"></div>
 
-  <p>Prends le temps de réfléchir.</p>
+    <div class="buttons" id="buttons">
+      <button id="yesBtn">Oui</button>
+      <button id="noBtn">Non</button>
+    </div>
 
-  <div id="plea"></div>
-
-  <div class="buttons">
-    <button id="yesBtn">Oui</button>
-    <button id="noBtn">Non</button>
-  </div>
-
-  <div class="final" id="final">
-    <img src="https://media.tenor.com/4_oUN4CJOWUAAAAM/obito-rin.gif">
-    <div class="final-text">
-      Alors c’est nous, pour toujours.
+    <div class="final" id="final">
+      <img alt="obito rin gif" src="https://media.tenor.com/4_oUN4CJOWUAAAAM/obito-rin.gif">
+      <div class="final-text">
+        YOUPIII ! Tu seras mon obito et je serai ta Rin pour la vie inshaa Allah ❤️
+      </div>
     </div>
   </div>
 
-</div>
+  <script>
+    // Si un jour tu veux changer le prénom, modifie juste ici :
+    const NAME = "Nassim";
 
-<script>
-const yesBtn = document.getElementById("yesBtn");
-const noBtn  = document.getElementById("noBtn");
-const final  = document.getElementById("final");
-const plea   = document.getElementById("plea");
-const confetti = document.getElementById("confetti");
+    document.getElementById("hisName").textContent = NAME;
+    document.getElementById("hisName2").textContent = NAME;
 
-const messages = [
-  "stp",
-  "réfléchis bien",
-  "t’es sûr",
-  "allez…",
-  "t’y es presque",
-  "encore un effort",
-  "je compte sur toi"
-];
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn  = document.getElementById("noBtn");
+    const final  = document.getElementById("final");
+    const buttons = document.getElementById("buttons");
+    const plea   = document.getElementById("plea");
+    const confetti = document.getElementById("confetti");
 
-let noClicks = 0;
+    const messages = [
+      "stp",
+      "réfléchis bien",
+      "t’es sûr",
+      "allez…",
+      "t’y es presque",
+      "encore un effort",
+      "je compte sur toi",
+      "bon… choisis “Oui”"
+    ];
 
-function scaleNo(){
-  const scale = Math.max(0.25, 1 - noClicks * 0.12);
-  noBtn.style.transform = `scale(${scale})`;
+    let noClicks = 0;
 
-  if(scale <= 0.35) noBtn.style.opacity = "0.4";
-  if(scale <= 0.25) noBtn.style.pointerEvents = "none";
-}
+    function scaleNo(){
+      // Rétrécit uniquement au clic
+      const scale = Math.max(0.22, 1 - noClicks * 0.14);
+      noBtn.style.transform = `scale(${scale})`;
 
-function scaleYes(){
-  const scale = Math.min(2, 1 + noClicks * 0.18);
-  yesBtn.style.transform = `scale(${scale})`;
-}
+      if(scale <= 0.40) noBtn.style.opacity = "0.45";
+      if(scale <= 0.22) noBtn.style.pointerEvents = "none";
+    }
 
-function updateMessage(){
-  plea.textContent =
-    messages[Math.min(noClicks-1, messages.length-1)];
-}
+    function scaleYes(){
+      const scale = Math.min(2.1, 1 + noClicks * 0.18);
+      yesBtn.style.transform = `scale(${scale})`;
+    }
 
-noBtn.addEventListener("click", e=>{
-  e.preventDefault();
-  noClicks++;
-  scaleNo();
-  scaleYes();
-  updateMessage();
-});
+    function updateMessage(){
+      plea.textContent = messages[Math.min(noClicks-1, messages.length-1)];
+    }
 
-yesBtn.addEventListener("click", ()=>{
-  document.querySelector(".buttons").style.display="none";
-  final.style.display="block";
-  confettiBurst();
-});
+    noBtn.addEventListener("click", (e)=>{
+      e.preventDefault();
+      noClicks++;
+      scaleNo();
+      scaleYes();
+      updateMessage();
+    });
 
-function confettiBurst(){
-  const colors=["#f97316","#60a5fa","#22c55e","#fbbf24"];
-  for(let i=0;i<120;i++){
-    const d=document.createElement("div");
-    d.className="piece";
-    d.style.left=Math.random()*100+"vw";
-    d.style.background=
-      colors[Math.floor(Math.random()*colors.length)];
-    d.style.animationDuration=1.5+Math.random()+"s";
-    confetti.appendChild(d);
-  }
-  setTimeout(()=>confetti.innerHTML="",3000);
-}
-</script>
+    yesBtn.addEventListener("click", ()=>{
+      buttons.style.display = "none";
+      final.style.display = "block";
+      confettiBurst();
+    });
 
+    function confettiBurst(){
+      const colors=["#f97316","#60a5fa","#22c55e","#fbbf24"];
+      for(let i=0;i<120;i++){
+        const d=document.createElement("div");
+        d.className="piece";
+        d.style.left=Math.random()*100+"vw";
+        d.style.background=colors[Math.floor(Math.random()*colors.length)];
+        d.style.animationDuration=1.4+Math.random()*1.2+"s";
+        d.style.opacity=0.85+Math.random()*0.15;
+        confetti.appendChild(d);
+      }
+      setTimeout(()=>confetti.innerHTML="",3000);
+    }
+  </script>
 </body>
 </html>
