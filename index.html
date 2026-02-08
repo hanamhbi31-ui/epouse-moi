@@ -14,8 +14,9 @@
       --text:#f9fafb;
       --muted:rgba(249,250,251,.75);
 
-      --accent1:#f97316; /* orange */
-      --accent2:#60a5fa; /* bleu */
+      --accent1:#f97316;
+      --accent2:#60a5fa;
+
       --yes1:#22c55e;
       --yes2:#16a34a;
       --no1:#fb7185;
@@ -138,6 +139,8 @@
       margin-top:12px;
       font-weight:900;
       opacity:.95;
+      font-size:20px;
+      line-height:1.25;
     }
 
     @keyframes pop{
@@ -171,11 +174,11 @@
   <div class="card">
     <div class="name">Pour <span id="hisName">Nassim</span></div>
 
-    <h1>
+    <h1 id="question">
       <span id="hisName2">Nassim</span>, est-ce que tu veux finir ta vie auprès de moi, pour toujours ?
     </h1>
 
-    <p>Clique, et sois honnête.</p>
+    <p id="subtitle">Clique, et sois honnête.</p>
 
     <div id="plea"></div>
 
@@ -185,14 +188,15 @@
     </div>
 
     <div class="final" id="final">
-  <img src="https://media.tenor.com/4_oUN4CJOWUAAAAM/obito-rin.gif">
-  <div class="final-text">
-    YOUPIII ! Tu seras mon obito et je serai ta Rin pour la vie inshaa Allah ❤️
+      <img alt="obito rin gif" src="https://media.tenor.com/4_oUN4CJOWUAAAAM/obito-rin.gif">
+      <div class="final-text">
+        YOUPIII ! Tu seras mon obito et je serai ta Rin pour la vie inshaa Allah ❤️
+      </div>
+    </div>
   </div>
-</div>
 
   <script>
-    // Si un jour tu veux changer le prénom, modifie juste ici :
+    // Change le prénom ici si besoin
     const NAME = "Nassim";
 
     document.getElementById("hisName").textContent = NAME;
@@ -204,6 +208,9 @@
     const buttons = document.getElementById("buttons");
     const plea   = document.getElementById("plea");
     const confetti = document.getElementById("confetti");
+
+    const question = document.getElementById("question");
+    const subtitle = document.getElementById("subtitle");
 
     const messages = [
       "stp",
@@ -245,7 +252,13 @@
     });
 
     yesBtn.addEventListener("click", ()=>{
+      // Cache l'écran initial
+      question.style.display = "none";
+      subtitle.style.display = "none";
+      plea.style.display = "none";
       buttons.style.display = "none";
+
+      // Affiche l'écran final (GIF + phrase)
       final.style.display = "block";
       confettiBurst();
     });
