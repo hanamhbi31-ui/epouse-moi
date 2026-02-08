@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Question très importante 👀</title>
+  <style>
+    :root {
+      --bg1:#fff1f7;
+      --bg2:#f3f7ff;
+      --text:#111827;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background: radial-gradient(1200px 700px at 20% 20%, var(--bg1), transparent),
+                  radial-gradient(1200px 700px at 80% 80%, var(--bg2), transparent),
+                  #ffffff;
+      overflow:hidden;
+    }
+    .card{
+      width:min(520px, 92vw);
+      background:rgba(255,255,255,0.85);
+      border:1px solid rgba(17,24,39,0.08);
+      border-radius:24px;
+      padding:26px 22px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.10);
+      backdrop-filter: blur(8px);
+      text-align:center;
+      position:relative;
+    }
+    h1{
+      margin:0 0 8px;
+      font-size:28px;
+      letter-spacing:-0.02em;
+    }
+    p{margin:0 0 18px; opacity:.85}
+    .buttons{
+      display:flex;
+      gap:14px;
+      justify-content:center;
+      align-items:center;
+      margin-top:10px;
+      flex-wrap:wrap;
+      position:relative;
+      min-height:70px;
+    }
+    button{
+      border:0;
+      padding:14px 18px;
+      border-radius:999px;
+      font-weight:700;
+      cursor:pointer;
+      transition: transform .18s ease, filter .18s ease, opacity .18s ease;
+      user-select:none;
+    }
+    #yesBtn{
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color:white;
+      box-shadow: 0 10px 25px rgba(34,197,94,.35);
+      transform: scale(1);
+    }
+    #noBtn{
+      background: linear-gradient(135deg, #fb7185, #ef4444);
+      color:white;
+      box-shadow: 0 10px 25px rgba(239,68,68,.25);
+      position:relative;
+      transform: scale(1);
+    }
+
+    /* écran final */
+    .final{
+      display:none;
+      margin-top:18px;
+      animation: pop .35s ease both;
+    }
+    .final img{
+      width:min(340px, 86vw);
+      border-radius:18px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+      border:1px solid rgba(17,24,39,0.10);
+    }
+    .badge{
+      display:inline-block;
+      margin-top:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(34,197,94,.12);
+      border:1px solid rgba(34,197,94,.25);
+      font-weight:700;
+    }
+
+    /* confettis */
+    .confetti{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+    .piece{
+      position:absolute;
+      width:10px; height:14px;
+      opacity:.95;
+      top:-20px;
+      animation: fall linear forwards;
+      border-radius:3px;
+    }
+    @keyframes fall{
+      to { transform: translateY(110vh) rotate(720deg); opacity:1; }
+    }
+    @keyframes pop{
+      from { transform: scale(.92); opacity:0; }
+      to { transform: scale(1); opacity:1; }
+    }
+
+    /* petit texte en bas */
+    .hint{margin-top:14px; font-size:12px; opacity:.55}
+  </style>
+</head>
+<body>
+  <div class="confetti" id="confetti"></div>
+
+  <div class="card" id="card">
+    <h1 id="question">Tu veux m’épouser ? 💍</h1>
+    <p id="subtitle">Réfléchis bien… c’est une question piège 😌</p>
+
+    <div class="buttons" id="buttons">
+      <button id="yesBtn">Ouiii 🥹</button>
+      <button id="noBtn">Non 😶</button>
+    </div>
+
+    <div class="final" id="final">
+      <!-- Remplace le src par TON GIF (lien giphy, tenor, ou image hébergée) -->
+      <img id="gif" alt="cute gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
+      <div class="badge">Ok… prépare-toi, on va être trop heureux 🤍</div>
+    </div>
+
+    <div class="hint">PS: si tu cliques “Non”, il se passe… des choses.</div>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn  = document.getElementById("noBtn");
+    const final  = document.getElementById("final");
+    const buttons = document.getElementById("buttons");
+    const question = document.getElementById("question");
+    const subtitle = document.getElementById("subtitle");
+    const confetti = document.getElementById("confetti");
+
+    let noClicks = 0;
+
+    function rand(min, max){ return Math.random() * (max - min) + min; }
+
+    function moveNoButton() {
+      // déplace le bouton Non dans la zone des boutons (effet troll)
+      const area = buttons.getBoundingClientRect();
+      const btn = noBtn.getBoundingClientRect();
+
+      const maxX = area.width - btn.width;
+      const maxY = area.height - btn.height;
+
+      const x = rand(-maxX/2, maxX/2);
+      const y = rand(-maxY/2, maxY/2);
+
+      noBtn.style.transform = `translate(${x}px, ${y}px) scale(${Math.max(0.35, 1 - noClicks*0.12)})`;
+    }
+
+    function scaleYesButton() {
+      const scale = 1 + noClicks * 0.18;
+      yesBtn.style.transform = `scale(${Math.min(scale, 2.2)})`;
+    }
+
+    function popConfetti() {
+      confetti.innerHTML = "";
+      const colors = ["#22c55e","#60a5fa","#f472b6","#fbbf24","#a78bfa","#fb7185"];
+      const pieces = 120;
+
+      for(let i=0;i<pieces;i++){
+        const d = document.createElement("div");
+        d.className = "piece";
+        d.style.left = rand(0, 100) + "vw";
+        d.style.background = colors[Math.floor(rand(0, colors.length))];
+        d.style.transform = `rotate(${rand(0,360)}deg)`;
+        d.style.animationDuration = rand(1.2, 2.6) + "s";
+        d.style.animationDelay = rand(0, 0.3) + "s";
+        d.style.width = rand(7, 12) + "px";
+        d.style.height = rand(10, 18) + "px";
+        confetti.appendChild(d);
+      }
+      setTimeout(() => confetti.innerHTML = "", 3200);
+    }
+
+    noBtn.addEventListener("mouseenter", () => {
+      // sur desktop, c’est drôle que “Non” fuit même au survol
+      noClicks++;
+      scaleYesButton();
+      moveNoButton();
+      subtitle.textContent = ["T’es sûre ?", "Vraiment ?", "Réfléchis 😭", "Non n’existe pas ici", "Choisis bien 🤨"][noClicks % 5];
+      if(noClicks >= 6) noBtn.style.opacity = "0.35";
+      if(noClicks >= 10) noBtn.style.display = "none";
+    });
+
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      noClicks++;
+      scaleYesButton();
+      moveNoButton();
+    });
+
+    yesBtn.addEventListener("click", () => {
+      question.textContent = "YEAAAHHHH 🥳💍";
+      subtitle.textContent = "Je savais. Bonne réponse.";
+      buttons.style.display = "none";
+      final.style.display = "block";
+      popConfetti();
+    });
+  </script>
+</body>
+</html>
