@@ -3,18 +3,19 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Question très importante 🍥</title>
+  <title>Nassim</title>
+
   <style>
     :root{
-      --bg1:#0b1020;        /* nuit bleu */
-      --bg2:#1a0f1f;        /* violet sombre */
+      --bg1:#0b1020;
+      --bg2:#1a0f1f;
       --card:rgba(255,255,255,.08);
       --stroke:rgba(255,255,255,.12);
       --text:#f9fafb;
       --muted:rgba(249,250,251,.75);
 
-      --orange:#f97316;     /* vibe Naruto */
-      --blue:#60a5fa;       /* vibe Rin */
+      --orange:#f97316;
+      --blue:#60a5fa;
       --yes1:#22c55e;
       --yes2:#16a34a;
       --no1:#fb7185;
@@ -22,85 +23,58 @@
     }
 
     *{box-sizing:border-box}
+
     body{
       margin:0;
       min-height:100vh;
       display:flex;
       align-items:center;
       justify-content:center;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
       color:var(--text);
       background:
         radial-gradient(900px 600px at 20% 20%, rgba(249,115,22,.25), transparent 60%),
         radial-gradient(900px 600px at 80% 70%, rgba(96,165,250,.22), transparent 60%),
-        radial-gradient(1200px 800px at 50% 50%, rgba(236,72,153,.10), transparent 65%),
         linear-gradient(180deg, var(--bg1), var(--bg2));
       overflow:hidden;
     }
 
-    /* petit motif “tourbillon” discret (pas d’images) */
-    .swirl{
-      position:fixed; inset:-120px;
-      background:
-        radial-gradient(circle at 20% 40%, rgba(255,255,255,.06) 0 2px, transparent 3px 100%),
-        radial-gradient(circle at 70% 60%, rgba(255,255,255,.05) 0 2px, transparent 3px 100%),
-        radial-gradient(circle at 45% 20%, rgba(255,255,255,.04) 0 2px, transparent 3px 100%);
-      filter: blur(0.2px);
-      opacity:.55;
-      pointer-events:none;
-      animation: drift 10s ease-in-out infinite alternate;
-    }
-    @keyframes drift{
-      from{transform:translate(0,0) scale(1)}
-      to{transform:translate(10px,-12px) scale(1.02)}
-    }
-
     .card{
-      width:min(560px, 92vw);
+      width:min(600px, 92vw);
       background:var(--card);
       border:1px solid var(--stroke);
-      border-radius:26px;
-      padding:26px 22px 22px;
-      box-shadow: 0 22px 70px rgba(0,0,0,0.45);
+      border-radius:24px;
+      padding:28px 24px;
+      box-shadow: 0 22px 70px rgba(0,0,0,.45);
       backdrop-filter: blur(10px);
       text-align:center;
-      position:relative;
     }
 
-    .chip{
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.18);
-      color: var(--muted);
-      font-weight:700;
+    .tag{
       font-size:12px;
-      letter-spacing:.02em;
-      margin-bottom:14px;
-    }
-    .dot{
-      width:8px;height:8px;border-radius:99px;
-      background: linear-gradient(135deg, var(--orange), var(--blue));
-      box-shadow: 0 0 18px rgba(249,115,22,.5);
+      opacity:.7;
+      margin-bottom:12px;
+      letter-spacing:.04em;
+      font-weight:700;
     }
 
     h1{
       margin:0 0 10px;
       font-size:26px;
-      letter-spacing:-0.02em;
-      line-height:1.15;
+      line-height:1.25;
+      letter-spacing:-.02em;
     }
-    p{margin:0; color:var(--muted)}
+
+    p{
+      margin:0;
+      color:var(--muted);
+    }
+
     #plea{
       margin-top:14px;
       min-height:22px;
       font-weight:800;
       letter-spacing:.01em;
-      color: rgba(249,250,251,.92);
-      text-shadow: 0 8px 30px rgba(0,0,0,.35);
     }
 
     .buttons{
@@ -109,7 +83,6 @@
       justify-content:center;
       align-items:center;
       margin-top:18px;
-      flex-wrap:wrap;
       min-height:70px;
     }
 
@@ -117,48 +90,44 @@
       border:0;
       padding:14px 18px;
       border-radius:999px;
-      font-weight:900;
+      font-weight:800;
       cursor:pointer;
-      user-select:none;
-      transition: transform .16s ease, filter .16s ease, opacity .16s ease;
+      transition: transform .18s ease, opacity .18s ease;
     }
 
     #yesBtn{
       background: linear-gradient(135deg, var(--yes1), var(--yes2));
       color:white;
-      box-shadow: 0 12px 28px rgba(34,197,94,.25);
-      transform: scale(1);
+      transform:scale(1);
     }
-    #yesBtn:hover{filter:brightness(1.05)}
 
     #noBtn{
       background: linear-gradient(135deg, var(--no1), var(--no2));
       color:white;
-      box-shadow: 0 12px 28px rgba(239,68,68,.18);
-      transform: scale(1);
+      transform:scale(1);
     }
-    #noBtn:hover{filter:brightness(1.02)}
 
     .final{
       display:none;
       margin-top:18px;
       animation: pop .35s ease both;
     }
+
     .final img{
       width:min(360px, 86vw);
-      border-radius:18px;
-      box-shadow: 0 18px 44px rgba(0,0,0,0.35);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
+      border-radius:16px;
+      box-shadow:0 18px 40px rgba(0,0,0,.35);
     }
-    .badge{
-      display:inline-block;
+
+    .final-text{
       margin-top:12px;
-      padding:10px 14px;
-      border-radius:999px;
-      background: rgba(249,115,22,.14);
-      border: 1px solid rgba(249,115,22,.25);
-      font-weight:900;
+      font-weight:800;
+      opacity:.9;
+    }
+
+    @keyframes pop{
+      from{transform:scale(.92);opacity:0}
+      to{transform:scale(1);opacity:1}
     }
 
     .confetti{
@@ -167,147 +136,119 @@
       pointer-events:none;
       overflow:hidden;
     }
+
     .piece{
       position:absolute;
-      width:10px; height:14px;
-      opacity:.95;
+      width:10px;
+      height:14px;
       top:-20px;
       animation: fall linear forwards;
       border-radius:3px;
     }
-    @keyframes fall{
-      to { transform: translateY(110vh) rotate(720deg); opacity:1; }
-    }
-    @keyframes pop{
-      from { transform: scale(.92); opacity:0; }
-      to { transform: scale(1); opacity:1; }
-    }
 
-    .hint{margin-top:14px; font-size:12px; color:rgba(249,250,251,.55)}
-    .tiny{font-size:11px; color:rgba(249,250,251,.5); margin-top:6px}
+    @keyframes fall{
+      to{transform:translateY(110vh) rotate(720deg)}
+    }
   </style>
 </head>
 
 <body>
-  <div class="swirl"></div>
-  <div class="confetti" id="confetti"></div>
 
-  <div class="card" id="card">
-    <div class="chip"><span class="dot"></span> Naruto vibe • Obito × Rin</div>
+<div class="confetti" id="confetti"></div>
 
-    <h1 id="question">Est-ce que tu veux finir ta vie auprès de moi, pour toujours ? 🍥🤍</h1>
-    <p id="subtitle">Attention… cette question n’a qu’une seule bonne réponse 😌</p>
+<div class="card">
 
-    <div id="plea"></div>
+  <div class="tag">Obito × Rin</div>
 
-    <div class="buttons" id="buttons">
-      <button id="yesBtn">Oui, pour toujours 🤍</button>
-      <button id="noBtn">Non…</button>
-    </div>
+  <h1>
+    Nassim…<br>
+    Est-ce que tu veux finir ta vie auprès de moi,<br>
+    pour toujours ?
+  </h1>
 
-    <div class="final" id="final">
-      <img id="gif" alt="Obito & Rin gif" src="https://media.tenor.com/4_oUN4CJOWUAAAAM/obito-rin.gif">
-      <div class="badge">D’accord… alors c’est nous, pour toujours 🧡💙</div>
-      <div class="tiny">PS: tu viens de débloquer le “happy ending” ✨</div>
-    </div>
+  <p>Prends le temps de réfléchir.</p>
 
-    <div class="hint">🍥 Si tu cliques “Non”, le bouton va… perdre confiance.</div>
+  <div id="plea"></div>
+
+  <div class="buttons">
+    <button id="yesBtn">Oui</button>
+    <button id="noBtn">Non</button>
   </div>
 
-  <script>
-    const yesBtn = document.getElementById("yesBtn");
-    const noBtn  = document.getElementById("noBtn");
-    const final  = document.getElementById("final");
-    const buttons = document.getElementById("buttons");
-    const question = document.getElementById("question");
-    const subtitle = document.getElementById("subtitle");
-    const confetti = document.getElementById("confetti");
-    const plea = document.getElementById("plea");
+  <div class="final" id="final">
+    <img src="https://media.tenor.com/4_oUN4CJOWUAAAAM/obito-rin.gif">
+    <div class="final-text">
+      Alors c’est nous, pour toujours.
+    </div>
+  </div>
 
-    // Messages qui s'affichent quand il insiste sur "Non"
-    const pleas = [
-      "stp 🥺",
-      "réfléchis bien… 😌",
-      "t’es sûr ? 🫠",
-      "allez… fais pas ça 😭",
-      "t’y es presque 👀",
-      "je te jure c’est la bonne réponse 🤝",
-      "ok… là tu abuses 😭",
-      "regarde le bouton… il souffre 😔",
-      "bon… choisis “Oui” et on en parle 😌"
-    ];
+</div>
 
-    let noClicks = 0;
+<script>
+const yesBtn = document.getElementById("yesBtn");
+const noBtn  = document.getElementById("noBtn");
+const final  = document.getElementById("final");
+const plea   = document.getElementById("plea");
+const confetti = document.getElementById("confetti");
 
-    function rand(min, max){ return Math.random() * (max - min) + min; }
+const messages = [
+  "stp",
+  "réfléchis bien",
+  "t’es sûr",
+  "allez…",
+  "t’y es presque",
+  "encore un effort",
+  "je compte sur toi"
+];
 
-    function scaleNoButton() {
-      // Rétrécit progressivement (sans se déplacer)
-      const scale = Math.max(0.25, 1 - noClicks * 0.12);
-      noBtn.style.transform = `scale(${scale})`;
-      // Quand c'est très petit, on le rend presque “inutilisable”
-      if (scale <= 0.35) noBtn.style.opacity = "0.35";
-      if (scale <= 0.25) noBtn.style.pointerEvents = "none";
-    }
+let noClicks = 0;
 
-    function scaleYesButton() {
-      const scale = Math.min(2.2, 1 + noClicks * 0.18);
-      yesBtn.style.transform = `scale(${scale})`;
-    }
+function scaleNo(){
+  const scale = Math.max(0.25, 1 - noClicks * 0.12);
+  noBtn.style.transform = `scale(${scale})`;
 
-    function updatePlea() {
-      const msg = pleas[Math.min(noClicks - 1, pleas.length - 1)];
-      plea.textContent = msg || "";
-    }
+  if(scale <= 0.35) noBtn.style.opacity = "0.4";
+  if(scale <= 0.25) noBtn.style.pointerEvents = "none";
+}
 
-    function popConfetti() {
-      confetti.innerHTML = "";
-      // Couleurs Naruto-ish (orange/bleu + un peu de rose)
-      const colors = ["#f97316","#60a5fa","#fb7185","#fbbf24","#a78bfa","#22c55e"];
-      const pieces = 130;
+function scaleYes(){
+  const scale = Math.min(2, 1 + noClicks * 0.18);
+  yesBtn.style.transform = `scale(${scale})`;
+}
 
-      for(let i=0;i<pieces;i++){
-        const d = document.createElement("div");
-        d.className = "piece";
-        d.style.left = rand(0, 100) + "vw";
-        d.style.background = colors[Math.floor(rand(0, colors.length))];
-        d.style.animationDuration = rand(1.2, 2.6) + "s";
-        d.style.animationDelay = rand(0, 0.25) + "s";
-        d.style.width = rand(7, 12) + "px";
-        d.style.height = rand(10, 18) + "px";
-        d.style.borderRadius = rand(2, 6) + "px";
-        confetti.appendChild(d);
-      }
-      setTimeout(() => confetti.innerHTML = "", 3200);
-    }
+function updateMessage(){
+  plea.textContent =
+    messages[Math.min(noClicks-1, messages.length-1)];
+}
 
-    // Sur desktop: au survol, on fait aussi “rétrécir” (sans bouger)
-    noBtn.addEventListener("mouseenter", () => {
-      noClicks++;
-      updatePlea();
-      scaleNoButton();
-      scaleYesButton();
-      subtitle.textContent = "Fais pas ton Obito têtu… 😭";
-    });
+noBtn.addEventListener("click", e=>{
+  e.preventDefault();
+  noClicks++;
+  scaleNo();
+  scaleYes();
+  updateMessage();
+});
 
-    // Sur mobile: click
-    noBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      noClicks++;
-      updatePlea();
-      scaleNoButton();
-      scaleYesButton();
-      subtitle.textContent = "Dernière chance 😌";
-    });
+yesBtn.addEventListener("click", ()=>{
+  document.querySelector(".buttons").style.display="none";
+  final.style.display="block";
+  confettiBurst();
+});
 
-    yesBtn.addEventListener("click", () => {
-      question.textContent = "YEAAAH 🥹🍥🤍";
-      subtitle.textContent = "Ok… viens on écrit notre histoire.";
-      plea.textContent = "";
-      buttons.style.display = "none";
-      final.style.display = "block";
-      popConfetti();
-    });
-  </script>
+function confettiBurst(){
+  const colors=["#f97316","#60a5fa","#22c55e","#fbbf24"];
+  for(let i=0;i<120;i++){
+    const d=document.createElement("div");
+    d.className="piece";
+    d.style.left=Math.random()*100+"vw";
+    d.style.background=
+      colors[Math.floor(Math.random()*colors.length)];
+    d.style.animationDuration=1.5+Math.random()+"s";
+    confetti.appendChild(d);
+  }
+  setTimeout(()=>confetti.innerHTML="",3000);
+}
+</script>
+
 </body>
 </html>
