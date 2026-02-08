@@ -3,13 +3,24 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Question très importante 👀</title>
+  <title>Question très importante 🍥</title>
   <style>
-    :root {
-      --bg1:#fff1f7;
-      --bg2:#f3f7ff;
-      --text:#111827;
+    :root{
+      --bg1:#0b1020;        /* nuit bleu */
+      --bg2:#1a0f1f;        /* violet sombre */
+      --card:rgba(255,255,255,.08);
+      --stroke:rgba(255,255,255,.12);
+      --text:#f9fafb;
+      --muted:rgba(249,250,251,.75);
+
+      --orange:#f97316;     /* vibe Naruto */
+      --blue:#60a5fa;       /* vibe Rin */
+      --yes1:#22c55e;
+      --yes2:#16a34a;
+      --no1:#fb7185;
+      --no2:#ef4444;
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -19,84 +30,137 @@
       justify-content:center;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
       color:var(--text);
-      background: radial-gradient(1200px 700px at 20% 20%, var(--bg1), transparent),
-                  radial-gradient(1200px 700px at 80% 80%, var(--bg2), transparent),
-                  #ffffff;
+      background:
+        radial-gradient(900px 600px at 20% 20%, rgba(249,115,22,.25), transparent 60%),
+        radial-gradient(900px 600px at 80% 70%, rgba(96,165,250,.22), transparent 60%),
+        radial-gradient(1200px 800px at 50% 50%, rgba(236,72,153,.10), transparent 65%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
       overflow:hidden;
     }
+
+    /* petit motif “tourbillon” discret (pas d’images) */
+    .swirl{
+      position:fixed; inset:-120px;
+      background:
+        radial-gradient(circle at 20% 40%, rgba(255,255,255,.06) 0 2px, transparent 3px 100%),
+        radial-gradient(circle at 70% 60%, rgba(255,255,255,.05) 0 2px, transparent 3px 100%),
+        radial-gradient(circle at 45% 20%, rgba(255,255,255,.04) 0 2px, transparent 3px 100%);
+      filter: blur(0.2px);
+      opacity:.55;
+      pointer-events:none;
+      animation: drift 10s ease-in-out infinite alternate;
+    }
+    @keyframes drift{
+      from{transform:translate(0,0) scale(1)}
+      to{transform:translate(10px,-12px) scale(1.02)}
+    }
+
     .card{
-      width:min(520px, 92vw);
-      background:rgba(255,255,255,0.85);
-      border:1px solid rgba(17,24,39,0.08);
-      border-radius:24px;
-      padding:26px 22px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.10);
-      backdrop-filter: blur(8px);
+      width:min(560px, 92vw);
+      background:var(--card);
+      border:1px solid var(--stroke);
+      border-radius:26px;
+      padding:26px 22px 22px;
+      box-shadow: 0 22px 70px rgba(0,0,0,0.45);
+      backdrop-filter: blur(10px);
       text-align:center;
       position:relative;
     }
-    h1{
-      margin:0 0 8px;
-      font-size:28px;
-      letter-spacing:-0.02em;
+
+    .chip{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      color: var(--muted);
+      font-weight:700;
+      font-size:12px;
+      letter-spacing:.02em;
+      margin-bottom:14px;
     }
-    p{margin:0 0 18px; opacity:.85}
+    .dot{
+      width:8px;height:8px;border-radius:99px;
+      background: linear-gradient(135deg, var(--orange), var(--blue));
+      box-shadow: 0 0 18px rgba(249,115,22,.5);
+    }
+
+    h1{
+      margin:0 0 10px;
+      font-size:26px;
+      letter-spacing:-0.02em;
+      line-height:1.15;
+    }
+    p{margin:0; color:var(--muted)}
+    #plea{
+      margin-top:14px;
+      min-height:22px;
+      font-weight:800;
+      letter-spacing:.01em;
+      color: rgba(249,250,251,.92);
+      text-shadow: 0 8px 30px rgba(0,0,0,.35);
+    }
+
     .buttons{
       display:flex;
       gap:14px;
       justify-content:center;
       align-items:center;
-      margin-top:10px;
+      margin-top:18px;
       flex-wrap:wrap;
-      position:relative;
       min-height:70px;
     }
+
     button{
       border:0;
       padding:14px 18px;
       border-radius:999px;
-      font-weight:700;
+      font-weight:900;
       cursor:pointer;
-      transition: transform .18s ease, filter .18s ease, opacity .18s ease;
       user-select:none;
-    }
-    #yesBtn{
-      background: linear-gradient(135deg, #22c55e, #16a34a);
-      color:white;
-      box-shadow: 0 10px 25px rgba(34,197,94,.35);
-      transform: scale(1);
-    }
-    #noBtn{
-      background: linear-gradient(135deg, #fb7185, #ef4444);
-      color:white;
-      box-shadow: 0 10px 25px rgba(239,68,68,.25);
-      position:relative;
-      transform: scale(1);
+      transition: transform .16s ease, filter .16s ease, opacity .16s ease;
     }
 
-    /* écran final */
+    #yesBtn{
+      background: linear-gradient(135deg, var(--yes1), var(--yes2));
+      color:white;
+      box-shadow: 0 12px 28px rgba(34,197,94,.25);
+      transform: scale(1);
+    }
+    #yesBtn:hover{filter:brightness(1.05)}
+
+    #noBtn{
+      background: linear-gradient(135deg, var(--no1), var(--no2));
+      color:white;
+      box-shadow: 0 12px 28px rgba(239,68,68,.18);
+      transform: scale(1);
+    }
+    #noBtn:hover{filter:brightness(1.02)}
+
     .final{
       display:none;
       margin-top:18px;
       animation: pop .35s ease both;
     }
     .final img{
-      width:min(340px, 86vw);
+      width:min(360px, 86vw);
       border-radius:18px;
-      box-shadow: 0 16px 40px rgba(0,0,0,0.18);
-      border:1px solid rgba(17,24,39,0.10);
+      box-shadow: 0 18px 44px rgba(0,0,0,0.35);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
     }
     .badge{
       display:inline-block;
-      margin-top:10px;
+      margin-top:12px;
       padding:10px 14px;
       border-radius:999px;
-      background:rgba(34,197,94,.12);
-      border:1px solid rgba(34,197,94,.25);
-      font-weight:700;
+      background: rgba(249,115,22,.14);
+      border: 1px solid rgba(249,115,22,.25);
+      font-weight:900;
     }
 
-    /* confettis */
     .confetti{
       position:fixed;
       inset:0;
@@ -119,29 +183,35 @@
       to { transform: scale(1); opacity:1; }
     }
 
-    /* petit texte en bas */
-    .hint{margin-top:14px; font-size:12px; opacity:.55}
+    .hint{margin-top:14px; font-size:12px; color:rgba(249,250,251,.55)}
+    .tiny{font-size:11px; color:rgba(249,250,251,.5); margin-top:6px}
   </style>
 </head>
+
 <body>
+  <div class="swirl"></div>
   <div class="confetti" id="confetti"></div>
 
   <div class="card" id="card">
-    <h1 id="question">Tu veux m’épouser ? 💍</h1>
-    <p id="subtitle">Réfléchis bien… c’est une question piège 😌</p>
+    <div class="chip"><span class="dot"></span> Naruto vibe • Obito × Rin</div>
+
+    <h1 id="question">Est-ce que tu veux finir ta vie auprès de moi, pour toujours ? 🍥🤍</h1>
+    <p id="subtitle">Attention… cette question n’a qu’une seule bonne réponse 😌</p>
+
+    <div id="plea"></div>
 
     <div class="buttons" id="buttons">
-      <button id="yesBtn">Ouiii 🥹</button>
-      <button id="noBtn">Non 😶</button>
+      <button id="yesBtn">Oui, pour toujours 🤍</button>
+      <button id="noBtn">Non…</button>
     </div>
 
     <div class="final" id="final">
-      <!-- Remplace le src par TON GIF (lien giphy, tenor, ou image hébergée) -->
-      <img id="gif" alt="cute gif" src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
-      <div class="badge">Ok… prépare-toi, on va être trop heureux 🤍</div>
+      <img id="gif" alt="Obito & Rin gif" src="https://media.tenor.com/4_oUN4CJOWUAAAAM/obito-rin.gif">
+      <div class="badge">D’accord… alors c’est nous, pour toujours 🧡💙</div>
+      <div class="tiny">PS: tu viens de débloquer le “happy ending” ✨</div>
     </div>
 
-    <div class="hint">PS: si tu cliques “Non”, il se passe… des choses.</div>
+    <div class="hint">🍥 Si tu cliques “Non”, le bouton va… perdre confiance.</div>
   </div>
 
   <script>
@@ -152,70 +222,88 @@
     const question = document.getElementById("question");
     const subtitle = document.getElementById("subtitle");
     const confetti = document.getElementById("confetti");
+    const plea = document.getElementById("plea");
+
+    // Messages qui s'affichent quand il insiste sur "Non"
+    const pleas = [
+      "stp 🥺",
+      "réfléchis bien… 😌",
+      "t’es sûr ? 🫠",
+      "allez… fais pas ça 😭",
+      "t’y es presque 👀",
+      "je te jure c’est la bonne réponse 🤝",
+      "ok… là tu abuses 😭",
+      "regarde le bouton… il souffre 😔",
+      "bon… choisis “Oui” et on en parle 😌"
+    ];
 
     let noClicks = 0;
 
     function rand(min, max){ return Math.random() * (max - min) + min; }
 
-    function moveNoButton() {
-      // déplace le bouton Non dans la zone des boutons (effet troll)
-      const area = buttons.getBoundingClientRect();
-      const btn = noBtn.getBoundingClientRect();
-
-      const maxX = area.width - btn.width;
-      const maxY = area.height - btn.height;
-
-      const x = rand(-maxX/2, maxX/2);
-      const y = rand(-maxY/2, maxY/2);
-
-      noBtn.style.transform = `translate(${x}px, ${y}px) scale(${Math.max(0.35, 1 - noClicks*0.12)})`;
+    function scaleNoButton() {
+      // Rétrécit progressivement (sans se déplacer)
+      const scale = Math.max(0.25, 1 - noClicks * 0.12);
+      noBtn.style.transform = `scale(${scale})`;
+      // Quand c'est très petit, on le rend presque “inutilisable”
+      if (scale <= 0.35) noBtn.style.opacity = "0.35";
+      if (scale <= 0.25) noBtn.style.pointerEvents = "none";
     }
 
     function scaleYesButton() {
-      const scale = 1 + noClicks * 0.18;
-      yesBtn.style.transform = `scale(${Math.min(scale, 2.2)})`;
+      const scale = Math.min(2.2, 1 + noClicks * 0.18);
+      yesBtn.style.transform = `scale(${scale})`;
+    }
+
+    function updatePlea() {
+      const msg = pleas[Math.min(noClicks - 1, pleas.length - 1)];
+      plea.textContent = msg || "";
     }
 
     function popConfetti() {
       confetti.innerHTML = "";
-      const colors = ["#22c55e","#60a5fa","#f472b6","#fbbf24","#a78bfa","#fb7185"];
-      const pieces = 120;
+      // Couleurs Naruto-ish (orange/bleu + un peu de rose)
+      const colors = ["#f97316","#60a5fa","#fb7185","#fbbf24","#a78bfa","#22c55e"];
+      const pieces = 130;
 
       for(let i=0;i<pieces;i++){
         const d = document.createElement("div");
         d.className = "piece";
         d.style.left = rand(0, 100) + "vw";
         d.style.background = colors[Math.floor(rand(0, colors.length))];
-        d.style.transform = `rotate(${rand(0,360)}deg)`;
         d.style.animationDuration = rand(1.2, 2.6) + "s";
-        d.style.animationDelay = rand(0, 0.3) + "s";
+        d.style.animationDelay = rand(0, 0.25) + "s";
         d.style.width = rand(7, 12) + "px";
         d.style.height = rand(10, 18) + "px";
+        d.style.borderRadius = rand(2, 6) + "px";
         confetti.appendChild(d);
       }
       setTimeout(() => confetti.innerHTML = "", 3200);
     }
 
+    // Sur desktop: au survol, on fait aussi “rétrécir” (sans bouger)
     noBtn.addEventListener("mouseenter", () => {
-      // sur desktop, c’est drôle que “Non” fuit même au survol
       noClicks++;
+      updatePlea();
+      scaleNoButton();
       scaleYesButton();
-      moveNoButton();
-      subtitle.textContent = ["T’es sûre ?", "Vraiment ?", "Réfléchis 😭", "Non n’existe pas ici", "Choisis bien 🤨"][noClicks % 5];
-      if(noClicks >= 6) noBtn.style.opacity = "0.35";
-      if(noClicks >= 10) noBtn.style.display = "none";
+      subtitle.textContent = "Fais pas ton Obito têtu… 😭";
     });
 
+    // Sur mobile: click
     noBtn.addEventListener("click", (e) => {
       e.preventDefault();
       noClicks++;
+      updatePlea();
+      scaleNoButton();
       scaleYesButton();
-      moveNoButton();
+      subtitle.textContent = "Dernière chance 😌";
     });
 
     yesBtn.addEventListener("click", () => {
-      question.textContent = "YEAAAHHHH 🥳💍";
-      subtitle.textContent = "Je savais. Bonne réponse.";
+      question.textContent = "YEAAAH 🥹🍥🤍";
+      subtitle.textContent = "Ok… viens on écrit notre histoire.";
+      plea.textContent = "";
       buttons.style.display = "none";
       final.style.display = "block";
       popConfetti();
